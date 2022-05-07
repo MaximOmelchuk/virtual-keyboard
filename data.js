@@ -1,0 +1,11 @@
+export const arrIndexFixed = [14, 15, 29, 30, 42, 43, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64];
+export const arrIndexWide = [14, 30, 42, 43, 55];
+export const arrButtonValuesFixed = ['Backspace', 'Tab', 'Del', 'CapsLock', 'Enter', 'Shift', '▲', 'Shift', 'Ctrl', 'Win', 'Alt', '&nbsp', 'Alt', '◄', '▼', '►', 'Ctrl'];
+export const arrButtonValuesEn = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./".split('');
+export const arrButtonValuesRu = 'ё1234567890-=йцукенгшщзхъ\\фывапролджэячсмитьбю.'.split('');
+export const arrButtonValuesEnCaps = "`1234567890-=QWERTYUIOP[]\\ASDFGHJKL;'ZXCVBNM,./".split('');
+export const arrButtonValuesRuCaps = 'Ё1234567890-=ЙЦУКЕНГШЩЗХЪ\\ФЫВАПРОЛДЖЭЯЧСМИТЬБЮ.'.split('');
+export const arrButtonValuesEnShift = '~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?</>'.split('');
+export const arrButtonValuesRuShift = 'Ё!"№;%:?*()_+ЙЦУКЕНГШЩЗХЪ/ФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,'.split('');
+export const arrButtonValuesShiftCapsEn = '~!@#$%^&*()_+qwertyuiop{}|asdfghjkl:"zxcvbnm<>?</>'.split('');
+export const arrButtonValuesShiftCapsRu = 'Ё!"№;%:?*()_+йцукенгшщзхъ/фывапролджэячсмитьбю,'.split('');
