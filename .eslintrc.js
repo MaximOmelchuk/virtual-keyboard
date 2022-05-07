@@ -9,5 +9,16 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-    }
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+              "js": "always",
+              "jsx": "never",
+              "ts": "never",
+              "tsx": "never"
+            }
+         ],
+    },
+    
 }

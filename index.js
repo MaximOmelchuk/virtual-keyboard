@@ -2,7 +2,7 @@ import {
   arrIndexFixed, arrIndexWide, arrButtonValuesFixed, arrButtonValuesEn,
   arrButtonValuesRu, arrButtonValuesEnCaps, arrButtonValuesRuCaps, arrButtonValuesEnShift,
   arrButtonValuesRuShift, arrButtonValuesShiftCapsEn, arrButtonValuesShiftCapsRu,
-} from './data';
+} from './data.js';
 
 let currentLang = 'en'; let
   arrButtonValuesCommon;
@@ -42,12 +42,14 @@ fixedArr.forEach((x, i) => {
 });
 
 if (currentLang === 'en') {
-  nonFixedArr.forEach((w, i) => {
-    w.innerHTML = arrButtonValuesEn[i];
+  nonFixedArr.forEach((x, i) => {
+    const tmp = x;
+    tmp.innerHTML = arrButtonValuesEn[i];
   });
 } else if (currentLang === 'ru') {
   nonFixedArr.forEach((x, i) => {
-    x.innerHTML = arrButtonValuesRu[i];
+    const tmp = x;
+    tmp.innerHTML = arrButtonValuesEn[i];
   });
 }
 if (!arrButtonValuesCommon) {
@@ -81,9 +83,9 @@ const displayOnScreenMouseDown = (e) => {
     screen.selectionEnd = tmp;
   }
   if (e.target.closest('.CapsLock')) {
-    e.target.closest('.CapsLock').classList.contains('button-down')
-      ? e.target.closest('.CapsLock').classList.remove('button-down')
-      : e.target.closest('.CapsLock').classList.add('button-down');
+    if (e.target.closest('.CapsLock').classList.contains('button-down')) {
+      e.target.closest('.CapsLock').classList.remove('button-down');
+    } else e.target.closest('.CapsLock').classList.add('button-down');
   } else if (e.target.closest('.button')) {
     e.target.closest('.button').classList.add('button-down');
   }
@@ -115,9 +117,9 @@ const displayOnScreenKeyboardDown = (e) => {
 
   if (ind !== -1) {
     if (keyCompliance === 'CapsLock') {
-      keyboard.querySelector('.CapsLock').classList.contains('button-down')
-        ? keyboard.querySelector('.CapsLock').classList.remove('button-down')
-        : keyboard.querySelector('.CapsLock').classList.add('button-down');
+      if (keyboard.querySelector('.CapsLock').classList.contains('button-down')) {
+        keyboard.querySelector('.CapsLock').classList.remove('button-down');
+      } else keyboard.querySelector('.CapsLock').classList.add('button-down');
     } else {
       keyboard.querySelectorAll('.button')[ind].classList.add('button-down');
     }
@@ -161,17 +163,19 @@ const shiftInfluentOn = (e) => {
   if (e.target.closest('.shift') || e.key === 'Shift') {
     if (currentLang === 'en') {
       nonFixedArr.forEach((x, i) => {
-        capsLock.classList.contains('button-down')
-          ? x.innerHTML = arrButtonValuesShiftCapsEn[i]
-          : x.innerHTML = arrButtonValuesEnShift[i];
-        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+        const tmp = x;
+        if (capsLock.classList.contains('button-down')) {
+          tmp.innerHTML = arrButtonValuesShiftCapsEn[i];
+        } else tmp.innerHTML = arrButtonValuesEnShift[i];
+        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
       });
     } else {
       nonFixedArr.forEach((x, i) => {
-        capsLock.classList.contains('button-down')
-          ? x.innerHTML = arrButtonValuesShiftCapsRu[i]
-          : x.innerHTML = arrButtonValuesRuShift[i];
-        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+        const tmp = x;
+        if (capsLock.classList.contains('button-down')) {
+          tmp.innerHTML = arrButtonValuesShiftCapsRu[i];
+        } else tmp.innerHTML = arrButtonValuesRuShift[i];
+        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
       });
     }
   }
@@ -180,20 +184,24 @@ const shiftInfluentOn = (e) => {
 const shiftInfluentOff = (e) => {
   if (e.key === 'Shift' && (ctrls[0].classList.contains('button-down') || ctrls[1].classList.contains('button-down'))) return;
 
-  if (e.target.closest('.shift') || e.key == 'Shift') {
+  if (e.target.closest('.shift') || e.key === 'Shift') {
     if (currentLang === 'en') {
       nonFixedArr.forEach((x, i) => {
-        capsLock.classList.contains('button-down')
-          ? x.innerHTML = arrButtonValuesEnCaps[i]
-          : x.innerHTML = arrButtonValuesEn[i];
-        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+        const tmp = x;
+        if (capsLock.classList.contains('button-down')) {
+          tmp.innerHTML = arrButtonValuesEnCaps[i];
+        } else tmp.innerHTML = arrButtonValuesEn[i];
+
+        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
       });
     } else {
       nonFixedArr.forEach((x, i) => {
-        capsLock.classList.contains('button-down')
-          ? x.innerHTML = arrButtonValuesRuCaps[i]
-          : x.innerHTML = arrButtonValuesRu[i];
-        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+        const tmp = x;
+        if (capsLock.classList.contains('button-down')) {
+          tmp.innerHTML = arrButtonValuesRuCaps[i];
+        } tmp.innerHTML = arrButtonValuesRu[i];
+
+        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
       });
     }
   }
@@ -205,71 +213,83 @@ const capsLogInfluent = (e) => {
       if (shifts[0].classList.contains('button-down') || shifts[1].classList.contains('button-down')) {
         if (currentLang === 'en') {
           nonFixedArr.forEach((x, i) => {
-            x.innerHTML = arrButtonValuesEnShift[i];
-            arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+            const tmp = x;
+            tmp.innerHTML = arrButtonValuesEnShift[i];
+            arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
           });
         } else {
           nonFixedArr.forEach((x, i) => {
-            x.innerHTML = arrButtonValuesRuShift[i];
-            arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+            const tmp = x;
+            tmp.innerHTML = arrButtonValuesRuShift[i];
+            arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
           });
         }
       } else if (currentLang === 'en') {
         nonFixedArr.forEach((x, i) => {
-          x.innerHTML = arrButtonValuesEn[i];
-          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+          const tmp = x;
+          tmp.innerHTML = arrButtonValuesEn[i];
+          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
         });
       } else {
         nonFixedArr.forEach((x, i) => {
-          x.innerHTML = arrButtonValuesRu[i];
-          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+          const tmp = x;
+          tmp.innerHTML = arrButtonValuesRu[i];
+          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
         });
       }
     } else if (shifts[0].classList.contains('button-down') || shifts[1].classList.contains('button-down')) {
       if (currentLang === 'en') {
         nonFixedArr.forEach((x, i) => {
-          x.innerHTML = arrButtonValuesShiftCapsEn[i];
-          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+          const tmp = x;
+          tmp.innerHTML = arrButtonValuesShiftCapsEn[i];
+          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
         });
       } else {
         nonFixedArr.forEach((x, i) => {
-          x.innerHTML = arrButtonValuesShiftCapsRu[i];
-          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+          const tmp = x;
+          tmp.innerHTML = arrButtonValuesShiftCapsRu[i];
+          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
         });
       }
     } else if (currentLang === 'en') {
       nonFixedArr.forEach((x, i) => {
-        x.innerHTML = arrButtonValuesEnCaps[i];
-        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+        const tmp = x;
+        tmp.innerHTML = arrButtonValuesEnCaps[i];
+        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
       });
     } else {
       nonFixedArr.forEach((x, i) => {
-        x.innerHTML = arrButtonValuesRuCaps[i];
-        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+        const tmp = x;
+        tmp.innerHTML = arrButtonValuesRuCaps[i];
+        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
       });
     }
   } else if (e.target.closest('.CapsLock')) {
     if (document.querySelector('.CapsLock').classList.contains('button-down')) {
       if (currentLang === 'en') {
         nonFixedArr.forEach((x, i) => {
-          x.innerHTML = arrButtonValuesEn[i];
-          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+          const tmp = x;
+          tmp.innerHTML = arrButtonValuesEn[i];
+          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
         });
       } else {
         nonFixedArr.forEach((x, i) => {
-          x.innerHTML = arrButtonValuesRu[i];
-          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+          const tmp = x;
+          tmp.innerHTML = arrButtonValuesRu[i];
+          arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
         });
       }
     } else if (currentLang === 'en') {
       nonFixedArr.forEach((x, i) => {
-        x.innerHTML = arrButtonValuesEnCaps[i];
-        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+        const tmp = x;
+        tmp.innerHTML = arrButtonValuesEnCaps[i];
+        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
       });
     } else {
       nonFixedArr.forEach((x, i) => {
-        x.innerHTML = arrButtonValuesRuCaps[i];
-        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+        const tmp = x;
+        tmp.innerHTML = arrButtonValuesRuCaps[i];
+        arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
       });
     }
   }
@@ -280,15 +300,33 @@ const langSwitch = (e) => {
     || (e.key === 'Control' && (shifts[0].classList.contains('button-down') || shifts[1].classList.contains('button-down')))) {
     if (currentLang === 'en') {
       nonFixedArr.forEach((x, i) => {
-        x.innerHTML = arrButtonValuesRu[i];
+        const tmp = x;
+        tmp.innerHTML = arrButtonValuesRu[i];
       });
     } else {
       nonFixedArr.forEach((x, i) => {
-        x.innerHTML = arrButtonValuesEn[i];
+        const tmp = x;
+        tmp.innerHTML = arrButtonValuesEn[i];
       });
     }
-    currentLang === 'en' ? currentLang = 'ru' : currentLang = 'en';
-    arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((x) => x.innerHTML);
+    if (currentLang === 'en') {
+      currentLang = 'ru';
+    } else currentLang = 'en';
+    arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
+  }
+};
+
+const changeLangLocalStorage = (curLang) => {
+  if (curLang === 'ru') {
+    nonFixedArr.forEach((x, i) => {
+      const tmp = x;
+      tmp.innerHTML = arrButtonValuesRu[i];
+    });
+  } else {
+    nonFixedArr.forEach((x, i) => {
+      const tmp = x;
+      tmp.innerHTML = arrButtonValuesEn[i];
+    });
   }
 };
 
@@ -300,18 +338,6 @@ const getLocalStorage = () => {
   if (localStorage.getItem('currentLang')) {
     currentLang = localStorage.getItem('currentLang');
     changeLangLocalStorage(currentLang);
-  }
-};
-
-const changeLangLocalStorage = (currentLang) => {
-  if (currentLang === 'ru') {
-    nonFixedArr.forEach((x, i) => {
-      x.innerHTML = arrButtonValuesRu[i];
-    });
-  } else if (currentLang === 'en') {
-    nonFixedArr.forEach((x, i) => {
-      x.innerHTML = arrButtonValuesEn[i];
-    });
   }
 };
 
