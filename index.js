@@ -1,7 +1,7 @@
 import {
   arrIndexFixed, arrIndexWide, arrButtonValuesFixed, arrButtonValuesEn,
   arrButtonValuesRu, arrButtonValuesEnCaps, arrButtonValuesRuCaps, arrButtonValuesEnShift,
-  arrButtonValuesRuShift, arrButtonValuesShiftCapsEn, arrButtonValuesShiftCapsRu,
+  arrButtonValuesRuShift, arrButtonValuesShiftCapsEn, arrButtonValuesShiftCapsRu, arrWhich,
 } from './data.js';
 
 let currentLang = 'en'; let
@@ -98,6 +98,32 @@ const displayOnScreenMouseUp = (e) => {
   });
 };
 
+// const changeCompliance = (which, key) => {
+//   if (arrButtonValuesCommon.indexOf(key) === -1) {
+//   let ind = arrWhich.indexOf(+which);
+//   console.log(which,arrWhich, keyboard.querySelectorAll('.nonfixed'), ind)
+//   return keyboard.querySelectorAll('.nonfixed')[ind].innerHTML;
+//   } else return key;
+
+//   // let tmp = key;
+//   // if (arrButtonValuesCommon.indexOf(tmp) === -1) {
+//   //   if (arrButtonValuesRu.includes(tmp)) {
+//   //     return arrButtonValuesEn[arrButtonValuesRu.indexOf(tmp)]
+//   //   } else if (arrButtonValuesEn.includes(tmp)) {
+//   //     return arrButtonValuesRu[arrButtonValuesEn.indexOf(tmp)]
+//   //   } else if (arrButtonValuesRuShift.includes(tmp)) {
+//   //     return arrButtonValuesEnShift[arrButtonValuesRuShift.indexOf(tmp)]
+//   //   } else if (arrButtonValuesEnShift.includes(tmp)) {
+//   //     return arrButtonValuesRuShift[arrButtonValuesEnShift.indexOf(tmp)]
+//   //   } else if (arrButtonValuesRuCaps.includes(tmp)) {
+//   //     return arrButtonValuesEnCaps[arrButtonValuesRuCaps.indexOf(tmp)]
+//   //   } else if (arrButtonValuesEnCaps.includes(tmp)) {
+//   //     return arrButtonValuesRuCaps[arrButtonValuesEnCaps.indexOf(tmp)]
+//   //   }
+//   // }
+//   // return tmp;
+// }
+
 const displayOnScreenKeyboardDown = (e) => {
   let keyCompliance;
   if (e.code === 'Space') keyCompliance = '&nbsp;';
@@ -109,7 +135,10 @@ const displayOnScreenKeyboardDown = (e) => {
   if (e.key === 'ArrowLeft') keyCompliance = '◄';
   if (e.key === 'ArrowRight') keyCompliance = '►';
 
-  if (!keyCompliance) keyCompliance = e.key;
+  if ((!keyCompliance && arrButtonValuesCommon.indexOf(e.key) === -1) || (e.key === '.')) {
+    const ind = arrWhich.indexOf(e.which);
+    keyCompliance = keyboard.querySelectorAll('.nonfixed')[ind].innerHTML;
+  } else if (!keyCompliance) keyCompliance = e.key;
 
   const ind = ['ShiftRight', 'ControlRight', 'AltRight'].includes(e.code)
     ? arrButtonValuesCommon.lastIndexOf(keyCompliance)
@@ -122,6 +151,13 @@ const displayOnScreenKeyboardDown = (e) => {
       } else keyboard.querySelector('.CapsLock').classList.add('button-down');
     } else {
       keyboard.querySelectorAll('.button')[ind].classList.add('button-down');
+
+      if (!keyboard.querySelectorAll('.button')[ind].classList.contains('fixed')) {
+        e.preventDefault();
+        screen.value += keyCompliance;
+      } else if (keyCompliance === 'Tab') {
+        e.preventDefault();
+      }
     }
 
     if (keyCompliance === 'Tab') e.preventDefault();
@@ -143,7 +179,11 @@ const displayOnScreenKeyboardUp = (e) => {
   if (e.key === 'ArrowLeft') keyCompliance = '◄';
   if (e.key === 'ArrowRight') keyCompliance = '►';
 
-  if (!keyCompliance) keyCompliance = e.key;
+  if ((!keyCompliance && arrButtonValuesCommon.indexOf(e.key) === -1) || (e.key === '.')) {
+    const ind = arrWhich.indexOf(e.which);
+    keyCompliance = keyboard.querySelectorAll('.nonfixed')[ind].innerHTML;
+  } else if (!keyCompliance) keyCompliance = e.key;
+
   let ind;
   if (e.code !== 'CapsLock') {
     ind = ['ShiftRight', 'ControlRight', 'AltRight'].includes(e.code)
