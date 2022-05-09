@@ -362,11 +362,13 @@ const changeLangLocalStorage = (curLang) => {
       const tmp = x;
       tmp.innerHTML = arrButtonValuesRu[i];
     });
+    arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
   } else {
     nonFixedArr.forEach((x, i) => {
       const tmp = x;
       tmp.innerHTML = arrButtonValuesEn[i];
     });
+    arrButtonValuesCommon = Array.prototype.slice.call(keyboard.querySelectorAll('.button')).map((y) => y.innerHTML);
   }
 };
 
