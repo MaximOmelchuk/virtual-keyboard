@@ -98,32 +98,6 @@ const displayOnScreenMouseUp = (e) => {
   });
 };
 
-// const changeCompliance = (which, key) => {
-//   if (arrButtonValuesCommon.indexOf(key) === -1) {
-//   let ind = arrWhich.indexOf(+which);
-//   console.log(which,arrWhich, keyboard.querySelectorAll('.nonfixed'), ind)
-//   return keyboard.querySelectorAll('.nonfixed')[ind].innerHTML;
-//   } else return key;
-
-//   // let tmp = key;
-//   // if (arrButtonValuesCommon.indexOf(tmp) === -1) {
-//   //   if (arrButtonValuesRu.includes(tmp)) {
-//   //     return arrButtonValuesEn[arrButtonValuesRu.indexOf(tmp)]
-//   //   } else if (arrButtonValuesEn.includes(tmp)) {
-//   //     return arrButtonValuesRu[arrButtonValuesEn.indexOf(tmp)]
-//   //   } else if (arrButtonValuesRuShift.includes(tmp)) {
-//   //     return arrButtonValuesEnShift[arrButtonValuesRuShift.indexOf(tmp)]
-//   //   } else if (arrButtonValuesEnShift.includes(tmp)) {
-//   //     return arrButtonValuesRuShift[arrButtonValuesEnShift.indexOf(tmp)]
-//   //   } else if (arrButtonValuesRuCaps.includes(tmp)) {
-//   //     return arrButtonValuesEnCaps[arrButtonValuesRuCaps.indexOf(tmp)]
-//   //   } else if (arrButtonValuesEnCaps.includes(tmp)) {
-//   //     return arrButtonValuesRuCaps[arrButtonValuesEnCaps.indexOf(tmp)]
-//   //   }
-//   // }
-//   // return tmp;
-// }
-
 const displayOnScreenKeyboardDown = (e) => {
   let keyCompliance;
   if (e.code === 'Space') keyCompliance = '&nbsp;';
@@ -134,6 +108,7 @@ const displayOnScreenKeyboardDown = (e) => {
   if (e.key === 'ArrowDown') keyCompliance = '▼';
   if (e.key === 'ArrowLeft') keyCompliance = '◄';
   if (e.key === 'ArrowRight') keyCompliance = '►';
+  if (!arrWhich.includes(e.which)) return;
 
   if ((!keyCompliance && arrButtonValuesCommon.indexOf(e.key) === -1) || (e.key === '.')) {
     const ind = arrWhich.indexOf(e.which);
@@ -178,6 +153,8 @@ const displayOnScreenKeyboardUp = (e) => {
   if (e.key === 'ArrowDown') keyCompliance = '▼';
   if (e.key === 'ArrowLeft') keyCompliance = '◄';
   if (e.key === 'ArrowRight') keyCompliance = '►';
+
+  if (!arrWhich.includes(e.which)) return;
 
   if ((!keyCompliance && arrButtonValuesCommon.indexOf(e.key) === -1) || (e.key === '.')) {
     const ind = arrWhich.indexOf(e.which);
