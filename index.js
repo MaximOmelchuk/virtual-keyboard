@@ -108,10 +108,12 @@ const displayOnScreenKeyboardDown = (e) => {
   if (e.key === 'ArrowDown') keyCompliance = '▼';
   if (e.key === 'ArrowLeft') keyCompliance = '◄';
   if (e.key === 'ArrowRight') keyCompliance = '►';
-  if (!arrWhich.includes(e.which)) return;
 
   if ((!keyCompliance && arrButtonValuesCommon.indexOf(e.key) === -1) || (e.key === '.')) {
     const ind = arrWhich.indexOf(e.which);
+    if (!keyboard.querySelectorAll('.nonfixed')[ind]) {
+      return;
+    }
     keyCompliance = keyboard.querySelectorAll('.nonfixed')[ind].innerHTML;
   } else if (!keyCompliance) keyCompliance = e.key;
 
@@ -154,10 +156,11 @@ const displayOnScreenKeyboardUp = (e) => {
   if (e.key === 'ArrowLeft') keyCompliance = '◄';
   if (e.key === 'ArrowRight') keyCompliance = '►';
 
-  if (!arrWhich.includes(e.which)) return;
-
   if ((!keyCompliance && arrButtonValuesCommon.indexOf(e.key) === -1) || (e.key === '.')) {
     const ind = arrWhich.indexOf(e.which);
+    if (!keyboard.querySelectorAll('.nonfixed')[ind]) {
+      return;
+    }
     keyCompliance = keyboard.querySelectorAll('.nonfixed')[ind].innerHTML;
   } else if (!keyCompliance) keyCompliance = e.key;
 
